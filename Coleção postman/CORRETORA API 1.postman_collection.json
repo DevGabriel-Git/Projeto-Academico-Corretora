@@ -1,0 +1,408 @@
+{
+  "info": {
+    "_postman_id": "9bcd7d2a-daa3-4d92-b4bd-2000e65e7f6f",
+    "name": "CORRETORA API 1",
+    "description": "### Welcome to Postman! This is your first collection. \n\nCollections are your starting point for building and testing APIs. You can use this one to:\n\n• Group related requests\n• Test your API in real-world scenarios\n• Document and share your requests\n\nUpdate the name and overview whenever you’re ready to make it yours.\n\n[Learn more about Postman Collections.](https://learning.postman.com/docs/collections/collections-overview/)",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "48342845"
+  },
+  "item": [
+    {
+      "name": "CorretoraAcademico",
+      "item": [
+        {
+          "name": "Ações",
+          "item": [
+            {
+              "name": "Cadastrar BR PETR4",
+              "request": {
+                "method": "POST",
+                "header": [],
+                "url": {
+                  "raw": "{{BaseUrl}}/acoes?ticker=PETR4&mercado=BR&cnpj=19131243000197",
+                  "host": [
+                    "{{BaseUrl}}"
+                  ],
+                  "path": [
+                    "acoes"
+                  ],
+                  "query": [
+                    {
+                      "key": "ticker",
+                      "value": "PETR4"
+                    },
+                    {
+                      "key": "mercado",
+                      "value": "BR"
+                    },
+                    {
+                      "key": "cnpj",
+                      "value": "19131243000197"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Cadastrar EUA AAPL",
+              "request": {
+                "method": "POST",
+                "header": [],
+                "url": {
+                  "raw": "{{BaseUrl}}/acoes?ticker=AAPL&mercado=EUA&cnpj=19131243000197",
+                  "host": [
+                    "{{BaseUrl}}"
+                  ],
+                  "path": [
+                    "acoes"
+                  ],
+                  "query": [
+                    {
+                      "key": "ticker",
+                      "value": "AAPL"
+                    },
+                    {
+                      "key": "mercado",
+                      "value": "EUA"
+                    },
+                    {
+                      "key": "cnpj",
+                      "value": "19131243000197"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Cadastrar EUA GOOGL",
+              "request": {
+                "method": "POST",
+                "header": [],
+                "url": {
+                  "raw": "{{BaseUrl}}/acoes?ticker=GOOGL&mercado=EUA&cnpj=19131243000197",
+                  "host": [
+                    "{{BaseUrl}}"
+                  ],
+                  "path": [
+                    "acoes"
+                  ],
+                  "query": [
+                    {
+                      "key": "ticker",
+                      "value": "GOOGL"
+                    },
+                    {
+                      "key": "mercado",
+                      "value": "EUA"
+                    },
+                    {
+                      "key": "cnpj",
+                      "value": "19131243000197"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Listar Todas",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{BaseUrl}}/acoes",
+                  "host": [
+                    "{{BaseUrl}}"
+                  ],
+                  "path": [
+                    "acoes"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Buscar por ID",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{BaseUrl}}/acoes/1",
+                  "host": [
+                    "{{BaseUrl}}"
+                  ],
+                  "path": [
+                    "acoes",
+                    "1"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Buscar por Ticker",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{BaseUrl}}/acoes/ticker/AAPL",
+                  "host": [
+                    "{{BaseUrl}}"
+                  ],
+                  "path": [
+                    "acoes",
+                    "ticker",
+                    "AAPL"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Atualizar cotação",
+              "request": {
+                "method": "PUT",
+                "header": [],
+                "url": {
+                  "raw": "{{BaseUrl}}/acoes/1/atualizar-cotacao",
+                  "host": [
+                    "{{BaseUrl}}"
+                  ],
+                  "path": [
+                    "acoes",
+                    "1",
+                    "atualizar-cotacao"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Corretoras",
+          "item": [
+            {
+              "name": "Cadastrar",
+              "request": {
+                "method": "POST",
+                "header": [],
+                "url": {
+                  "raw": "{{BaseUrl}}/corretoras?cnpj=19131243000197",
+                  "host": [
+                    "{{BaseUrl}}"
+                  ],
+                  "path": [
+                    "corretoras"
+                  ],
+                  "query": [
+                    {
+                      "key": "cnpj",
+                      "value": "19131243000197"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Listar todas",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{BaseUrl}}/corretoras",
+                  "host": [
+                    "{{BaseUrl}}"
+                  ],
+                  "path": [
+                    "corretoras"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Buscar por ID",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{BaseUrl}}/corretoras/1",
+                  "host": [
+                    "{{BaseUrl}}"
+                  ],
+                  "path": [
+                    "corretoras",
+                    "1"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Buscar por CNPJ",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{BaseUrl}}/corretoras/cnpj/19131243000197",
+                  "host": [
+                    "{{BaseUrl}}"
+                  ],
+                  "path": [
+                    "corretoras",
+                    "cnpj",
+                    "19131243000197"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Carteira",
+          "item": [
+            {
+              "name": "Comprar acão 1",
+              "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"corretoraId\": 1,\r\n    \"acaoId\": 1,\r\n    \"tipo\": \"COMPRA\",\r\n    \"quantidade\": 2,\r\n    \"precoUnitario\": 20.00\r\n}\r\n",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{BaseUrl}}/carteira/operar",
+                  "host": [
+                    "{{BaseUrl}}"
+                  ],
+                  "path": [
+                    "carteira",
+                    "operar"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Comprar acão 2",
+              "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"corretoraId\": 1,\r\n    \"acaoId\": 1,\r\n    \"tipo\": \"COMPRA\",\r\n    \"quantidade\": 2,\r\n    \"precoUnitario\": 40.00\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{BaseUrl}}/carteira/operar",
+                  "host": [
+                    "{{BaseUrl}}"
+                  ],
+                  "path": [
+                    "carteira",
+                    "operar"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Listar Carteiras",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"corretoraId\": 1,\r\n    \"acaoId\": 1,\r\n    \"tipo\": \"COMPRA\",\r\n    \"quantidade\": 2,\r\n    \"precoUnitario\": 20.00\r\n}\r\n"
+                },
+                "url": {
+                  "raw": "{{BaseUrl}}/carteira",
+                  "host": [
+                    "{{BaseUrl}}"
+                  ],
+                  "path": [
+                    "carteira"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Listar por ID",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{BaseUrl}}/carteira/1",
+                  "host": [
+                    "{{BaseUrl}}"
+                  ],
+                  "path": [
+                    "carteira",
+                    "1"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Listar por Corretora",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{BaseUrl}}/carteira/corretora/1",
+                  "host": [
+                    "{{BaseUrl}}"
+                  ],
+                  "path": [
+                    "carteira",
+                    "corretora",
+                    "1"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Listar Historico Carteira",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{BaseUrl}}/carteira/1/historico",
+                  "host": [
+                    "{{BaseUrl}}"
+                  ],
+                  "path": [
+                    "carteira",
+                    "1",
+                    "historico"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

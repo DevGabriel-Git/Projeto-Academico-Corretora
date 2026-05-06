@@ -11,23 +11,20 @@ import java.time.LocalDateTime;
 @Setter
 @NoArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-public class Acao {
+public class HistoricoCarteira {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @EqualsAndHashCode.Include
-    private String ticker;
-
-    private String nomeEmpresa;
-    private String mercado;
-    private String moeda;
-    private BigDecimal cotacaoAtual;
-    private LocalDateTime dataHoraCotacao;
-
     @ManyToOne
-    @JoinColumn(name = "corretora_id")
+    @JoinColumn(name = "carteira_id")
     @JsonBackReference
-    private Corretora corretora;
+    private Carteira carteira;
+
+    private String tipo;
+    private Integer quantidade;
+    private BigDecimal precoUnitario;
+    private BigDecimal valorTotal;
+    private LocalDateTime dataOperacao;
 }

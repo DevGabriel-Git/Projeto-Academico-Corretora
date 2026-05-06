@@ -3,6 +3,7 @@
 Trabalho desenvolvido para a disciplina de **Sistemas da Informação** na **UniFEF**, sob orientação do professor **Jefferson**.
 
 **Grupo:**
+
 - Gabriel Pereira
 - Rian Araújo
 - Paulo Candido
@@ -15,11 +16,14 @@ O CRT é uma API REST desenvolvida em Java com Spring Boot que simula um sistema
 
 Durante o desenvolvimento, nos preocupamos em organizar o código em camadas bem definidas e isolar as integrações externas usando interfaces, o que facilita muito a manutenção e a troca de fornecedores de API no futuro.
 
+Além do cadastro de corretoras e ações, o sistema conta com um módulo de **Carteira**, que permite realizar operações de compra e venda de ações, calcular o preço médio automaticamente e registrar o histórico completo de operações.
+
 ---
 
 ## Como rodar o projeto
 
 **Pré-requisitos:**
+
 - Java 17+
 - Maven
 - IntelliJ IDEA (ou qualquer IDE de sua preferência)
@@ -32,7 +36,7 @@ Durante o desenvolvimento, nos preocupamos em organizar o código em camadas bem
 4. Rode a classe principal
 5. Acesse `http://localhost:8080`
 
-O banco de dados utilizado é o **H2 em memória**, então não precisa configurar nada extra — sobe junto com a aplicação.
+O banco de dados utilizado é o **H2 em memória**, então não precisa configurar nada extra — sobe junto com a aplicação. O console do H2 pode ser acessado em `http://localhost:8080/h2-console`.
 
 ---
 
@@ -53,30 +57,35 @@ Cada chave é gratuita e pode ser obtida nos sites listados na seção de APIs.
 ## APIs externas utilizadas
 
 ### 1. BrasilAPI — Consulta de CNPJ
+
 - **Site:** https://brasilapi.com.br
 - **Uso:** Buscamos os dados cadastrais da corretora (razão social, nome fantasia, CEP, UF) a partir do CNPJ informado.
 - **Autenticação:** Não requer chave de API.
 - **Limitações:** Pode apresentar instabilidade em horários de pico. Dados dependem da base da Receita Federal.
 
 ### 2. ViaCEP — Consulta de endereço
+
 - **Site:** https://viacep.com.br
 - **Uso:** A partir do CEP retornado pela consulta de CNPJ, buscamos o logradouro, bairro e cidade da corretora.
 - **Autenticação:** Não requer chave de API.
 - **Limitações:** Cobre apenas CEPs brasileiros. Alguns CEPs comerciais retornam campos vazios.
 
 ### 3. brapi.dev — Cotação de ações brasileiras
+
 - **Site:** https://brapi.dev
 - **Uso:** Consultamos a cotação atual de ações negociadas na B3 (ex: PETR4, VALE3) a partir do ticker informado.
 - **Autenticação:** Requer token gratuito cadastrado no site.
 - **Limitações:** Plano gratuito tem limite de requisições mensais. Cotações podem ter pequeno delay.
 
 ### 4. Twelve Data — Cotação de ações americanas
+
 - **Site:** https://twelvedata.com
 - **Uso:** Consultamos a cotação de ações negociadas na NYSE e NASDAQ (ex: AAPL, GOOGL).
 - **Autenticação:** Requer chave de API gratuita.
 - **Limitações:** Plano gratuito permite 8 requisições por minuto e 800 por dia.
 
 ### 5. Alpha Vantage — Cotação de ações americanas (fallback)
+
 - **Site:** https://alphavantage.co
 - **Uso:** Utilizado como alternativa ao Twelve Data quando este falha ou atinge o limite de requisições.
 - **Autenticação:** Requer chave de API gratuita.
@@ -110,22 +119,60 @@ Uma decisão importante que tomamos foi usar **interfaces nos adapters** — por
 
 ### Corretoras
 
-| Método | Endpoint | Descrição |
-|--------|----------|-----------|
-| POST | `/corretoras?cnpj={cnpj}` | Cadastra uma corretora pelo CNPJ |
-| GET | `/corretoras` | Lista todas as corretoras |
-| GET | `/corretoras/{id}` | Busca corretora por ID |
-| GET | `/corretoras/cnpj/{cnpj}` | Busca corretora por CNPJ |
+| Método | Endpoint                  | Descrição                        |
+| ------ | ------------------------- | -------------------------------- |
+| POST   | `/corretoras?cnpj={cnpj}` | Cadastra uma corretora pelo CNPJ |
+| GET    | `/corretoras`             | Lista todas as corretoras        |
+| GET    | `/corretoras/{id}`        | Busca corretora por ID           |
+| GET    | `/corretoras?cnpj={cnpj}` | Busca corretora por CNPJ         |
 
 ### Ações
 
-| Método | Endpoint | Descrição |
-|--------|----------|-----------|
-| POST | `/acoes?ticker={ticker}&mercado={mercado}` | Cadastra uma ação (mercado: BR ou EUA) |
-| GET | `/acoes` | Lista todas as ações |
-| GET | `/acoes/{id}` | Busca ação por ID |
-| GET | `/acoes/ticker/{ticker}` | Busca ação por ticker |
-| PUT | `/acoes/{id}/atualizar-cotacao` | Atualiza a cotação de uma ação |
+| Método | Endpoint                                               | Descrição                                                    |
+| ------ | ------------------------------------------------------ | ------------------------------------------------------------ |
+| POST   | `/acoes?ticker={ticker}&mercado={mercado}&cnpj={cnpj}` | Cadastra uma ação vinculada a uma corretora (mercado: BR ou EUA) |
+| GET    | `/acoes`                                               | Lista todas as ações                                         |
+| GET    | `/acoes/{id}`                                          | Busca ação por ID                                            |
+| GET    | `/acoes/ticker/{ticker}`                               | Busca ação por ticker                                        |
+| PUT    | `/acoes/{id}/atualizar-cotacao`                        | Atualiza a cotação de uma ação                               |
+
+### Carteira
+
+| Método | Endpoint                            | Descrição                                      |
+| ------ | ----------------------------------- | ---------------------------------------------- |
+| POST   | `/carteira/operar`                  | Realiza uma operação de compra ou venda        |
+| GET    | `/carteira`                         | Lista todas as carteiras                       |
+| GET    | `/carteira/{id}`                    | Busca carteira por ID                          |
+| GET    | `/carteira/corretora/{corretoraId}` | Lista carteiras de uma corretora               |
+| GET    | `/carteira/{carteiraId}/historico`  | Lista o histórico de operações de uma carteira |
+
+#### Exemplo de operação de compra:
+
+```json
+POST /carteira/operar
+{
+    "corretoraId": 1,
+    "acaoId": 1,
+    "tipo": "COMPRA",
+    "quantidade": 10,
+    "precoUnitario": 49.08
+}
+```
+
+#### Exemplo de operação de venda:
+
+```json
+POST /carteira/operar
+{
+    "corretoraId": 1,
+    "acaoId": 1,
+    "tipo": "VENDA",
+    "quantidade": 5,
+    "precoUnitario": 55.00
+}
+```
+
+O sistema calcula o **preço médio** automaticamente a cada compra e valida se há quantidade suficiente para venda.
 
 ---
 
@@ -142,10 +189,13 @@ O sistema possui tratamento centralizado de erros via `@RestControllerAdvice`. T
 ```
 
 Cenários tratados:
+
 - CNPJ já cadastrado
 - Ticker já cadastrado
 - Corretora não encontrada
 - Ação não encontrada
+- Carteira não encontrada
+- Quantidade insuficiente para venda
 - Falha na comunicação com APIs externas
 - Mercado inválido (diferente de BR ou EUA)
 

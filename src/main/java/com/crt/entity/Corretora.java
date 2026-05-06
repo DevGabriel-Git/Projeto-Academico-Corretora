@@ -1,17 +1,11 @@
 package com.crt.entity;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
+import lombok.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-
 
 @Entity
 @Getter
@@ -23,6 +17,7 @@ public class Corretora {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private String cnpj;
     private String razaoSocial;
     private String nomeFantasia;
@@ -35,8 +30,6 @@ public class Corretora {
     private LocalDateTime dataCadastro;
 
     @OneToMany(mappedBy = "corretora")
-    @JsonManagedReference
+    @JsonBackReference
     private List<Acao> acoes = new ArrayList<>();
-
 }
-
